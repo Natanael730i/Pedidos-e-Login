@@ -9,8 +9,7 @@ app.set('port', port);
 
 server.listen(port);
 server.on('error', onError);
-server('listening', onListestening);
-
+server.on('listening', onListening);
 console.log('API rodando na porta ' + port);
 
 function normalizePort(val){
@@ -23,12 +22,6 @@ function normalizePort(val){
         return port;
     }
     return false;
-}
-
-function onError(error){
-    if(error.syscall !== 'listen'){
-        throw error;
-    }
 }
 
 function onError(error){
