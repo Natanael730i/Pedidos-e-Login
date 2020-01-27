@@ -74,5 +74,48 @@ exports.post = async(req,res,next) => {
                 fileName = 'default-product.png'
             }
         });
+
+        await repository.create({
+            title: req.body.title,
+            slug: req.body.slug,
+            description: req.body.description,
+            price: req.body.price,
+            active: true,
+            tags: req.body.tags,
+            image: 'https://nodestr.blob.core.window.net/product-images/' + fileName
+        });
+        res.status(201).send({
+            message: 'Produto cadastrado com sucesso!'
+        });
+    }catch(e){
+        console.log(e);
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }    
+};
+exports.put = async (req, res, next) => {
+    try{
+        await repository.update(req.params.id, req.body);
+        res.status(200).send({
+            message: 'Produto atualizado com sucesso!'
+        })
+    }catch(e){
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
     }
-}
+};
+
+exports.delete = async(req, res, next) => {
+    try{
+        await repository.delete(req.body.id)
+        res.status(200).send({
+            message: 'Produto removido com sucesso!'
+        });
+    }catch(e){
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+};
